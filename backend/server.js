@@ -11,9 +11,23 @@ const PORT=process.env.PORT || 5001;
 
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173';
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://pastebin-lite-topaz.vercel.app"
+];
+
 app.use(cors({
-    origin: FRONTEND_ORIGIN,
-    credentials: true,
+  origin: (origin, callback) => {
+    // allow server-to-server, curl, health checks
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
