@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "keywords": [],
   "author": "",
+  
   "license": "ISC",
   "type": "module",
   "dependencies": {

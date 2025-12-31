@@ -9,7 +9,6 @@ export const createPaste = async (req, res) => {
   try {
     const { content, ttl_seconds, max_views } = req.body;
 
-    // --- Validation ---
     if (!content || typeof content !== "string" || content.trim() === "") {
       return res.status(400).json({ error: "content is required" });
     }
@@ -24,13 +23,10 @@ export const createPaste = async (req, res) => {
       }
     }
 
-    // --- Generate paste ID ---
     const pasteId = crypto.randomBytes(6).toString("hex");
 
-    // --- Expiry calculation (MANDATORY) ---
     const expiresAt = new Date(Date.now() + ttl_seconds * 1000);
 
-    // --- Save ---
     await Paste.create({
       pasteId,
       content,
